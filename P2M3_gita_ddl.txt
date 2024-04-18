@@ -1,0 +1,43 @@
+-- membuat database baru khusus milestone
+-- CREATE DATABASE "P2M3";
+
+-- membuat table_m3
+BEGIN;
+
+CREATE TABLE table_m3 (
+    "Car_id" text,
+    "Date" date,
+    "Customer Name" varchar,
+    "Gender" varchar,
+    "Annual Income" numeric,
+    "Dealer_Name" varchar,
+    "Company" varchar,
+    "Model" varchar,
+    "Engine" varchar,
+    "Transmission" varchar,
+    "Color" varchar,
+    "Price ($)" numeric,
+    "Dealer_No" varchar,
+    "Body Style" varchar,
+    "Phone" numeric,
+    "Dealer_Region" varchar
+);
+
+-- menyesuaikan datestyle agar bisa dibaca oleh Postgres
+SET datestyle TO 'US';
+
+-- Insert dataset ke Postgres
+COPY table_m3("Car_id", "Date","Customer Name","Gender","Annual Income","Dealer_Name","Company","Model","Engine","Transmission","Color","Price ($)","Dealer_No" ,"Body Style","Phone","Dealer_Region") 
+FROM '/tmp/p2m3_gita_data_raw.csv' 
+DELIMITER ',' 
+CSV HEADER;
+
+-- Melihat dataset 
+SELECT * 
+FROM table_m3;
+
+-- membatalkan transaksi ke semula
+ROLLBACK;
+
+-- menyimpan perubahan secara permanen 
+COMMIT;
